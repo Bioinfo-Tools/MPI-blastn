@@ -58,19 +58,17 @@ fi
 
 
 if [ "$OS" == "Darwin" ]; then
-    curl -L https://github.com/Bioinfo-Tools/MPI-blastn/archive/master.zip -o MPI-blastn.zip
-    unzip MPI-blastn.zip
-    cd MPI-blastn-master/Release/
-    rm MPI-blastn.zip
-    make all
+#    curl -L https://github.com/Bioinfo-Tools/MPI-blastn/archive/master.zip -o MPI-blastn.zip
+#    unzip MPI-blastn.zip
+     cd MPI-blastn-master/Release/
+     make all
 fi
 
 if [ "$OS" == "linux" ]; then
-    wget https://github.com/Bioinfo-Tools/MPI-blastn/archive/master.zip -O MPI-blastn.zip
-    unzip MPI-blastn.zip
-    cd MPI-blastn-master/Release/
-    rm MPI-blastn.zip
-    make all
+#    wget https://github.com/Bioinfo-Tools/MPI-blastn/archive/master.zip -O MPI-blastn.zip
+#    unzip MPI-blastn.zip
+     cd MPI-blastn-master/Release/
+     make all
 fi
 
 if [ "$OS" == "Darwin" ]; then
