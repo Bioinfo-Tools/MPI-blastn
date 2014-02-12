@@ -21,6 +21,15 @@ On Mac OSX:
     unzip MPI-blastn.zip
 
 #Install
+
+This step requires the mpicc compiler from any MPI library version (OpenMPI, IntelMPI, etc.). OpenMPI is free/open source MPI library and is available at http://www.open-mpi.org.
+If you are in a cluster or HPC environment, this library may be already installed and you just need to load the module, like in the following example (this command may vary depending on which HPC environment you are using):
+
+    module load gcc
+    module load openmpi
+
+Than you are ready to install:
+
     cd MPI-blastn-master
     sh install.sh
 
