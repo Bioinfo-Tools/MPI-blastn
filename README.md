@@ -21,7 +21,7 @@ On Mac OSX:
     unzip MPI-blastn.zip
 
 #Install
-
+    cd MPI-blastn-master
     sh install.sh
 
 #Run
