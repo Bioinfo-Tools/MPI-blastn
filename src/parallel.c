@@ -11,6 +11,7 @@
 #include "debug.h"
 #include "mpifunc.h"
 
+
 int mpiBlastnSplitBase() {
 
 	DEBUG_ENTER_FUNCTION;
@@ -42,7 +43,7 @@ int mpiBlastnSplitBase() {
 	/* Open splited files, to write the sequences */
 	for (i = 0; i < globals.total_proc; i++) {
 		memset(file_name, 0, sizeof(file_name));
-		sprintf(file_name, "tmp_%d.fas", i);
+		sprintf(file_name, "tmp_%d.fasta", i);
 		fp_array[i] = fopen(file_name, "w");
 		assert(fp_array[i]);
 	}
@@ -132,13 +133,27 @@ void mpiBlastnExecute() {
 	memset(out, 0, sizeof(out));
 	memset(cmd, 0, sizeof(cmd));
 
-	sprintf(file_name, "tmp_%d.fas", globals.my_rank);
-	sprintf(out, "out.%d.fasta", globals.my_rank);
+	sprintf(file_name, "tmp_%d.fasta", globals.my_rank);
+	sprintf(out, "out.%d.tmp", globals.my_rank);
+
+
+	char arg1[256];
+        char exepath[256] = {0};
+	
+        sprintf( arg1, "/proc/%d/exe", getpid() );
+        readlink( arg1, exepath, 1024 );
+
+	char *pos = strrchr(exepath, '/');
+	if (pos != NULL) {
+   	*pos = '\0'; //this will put the null terminator here. you can also copy to another string if you want
+	}
+
+	printf("The path of the program is: %s\n", exepath);
 
 	sprintf(
 			cmd,
-			"./blastn -query %s -db %s -out %s -outfmt 6 -num_descriptions 1 -num_alignments 1 -num_threads %d",
-			file_name, globals.base_name, out, globals.num_threads);
+			"%s/blastn -query %s -db %s -out %s -outfmt 6 -max_target_seqs 1 -num_threads %d",
+			exepath, file_name, globals.base_name, out, globals.num_threads);
 
 	DEBUG_MSG("%s\n", cmd);
 	system(cmd);
@@ -169,7 +184,7 @@ void mpiBlastnExecute() {
 
 		fp = fopen(globals.out, "w");
 		for (i = 0; i < globals.total_proc; i++) {
-			sprintf(out, "out.%d.fasta", i);
+			sprintf(out, "out.%d.tmp", i);
 
 			fp2 = fopen(out, "r");
 			while (!feof(fp2)) {
