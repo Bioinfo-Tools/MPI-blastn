@@ -33,6 +33,8 @@ Than you are ready to install:
     cd MPI-blastn-master
     sh install.sh
 
+If the program was compiled correctly, you will be able to see the file "mpiblastn" inside the "Release" directory.
+
 #Run
 
 After install, MPI-blast can be executed from the Release directory:
